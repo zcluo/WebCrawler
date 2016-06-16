@@ -3,6 +3,7 @@ package com.emmaluo.crawler;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
+import us.codecraft.webmagic.pipeline.FilePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 
 
@@ -31,6 +32,6 @@ public class firstcrawler implements PageProcessor {
     }
 
     public static void main(String[] args) {
-        Spider.create(new firstcrawler()).addUrl("https://github.com/code4craft").thread(5).run();
+        Spider.create(new firstcrawler()).addPipeline(new FilePipeline("F:\\result\\")).addUrl("https://github.com/code4craft").thread(5).run();
     }
 }
