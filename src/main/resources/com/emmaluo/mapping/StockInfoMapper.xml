@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.emmaluo.IDao.StockInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.emmaluo.model.StockInfo" >
+    <id column="StockCode" property="stockcode" jdbcType="VARCHAR" />
+    <result column="StockCodeB" property="stockcodeb" jdbcType="VARCHAR" />
+    <result column="StockBelongIndexCode" property="stockbelongindexcode" jdbcType="VARCHAR" />
+    <result column="TradeCenterCode" property="tradecentercode" jdbcType="VARCHAR" />
+    <result column="CorpName" property="corpname" jdbcType="VARCHAR" />
+    <result column="ListDate" property="listdate" jdbcType="VARCHAR" />
+    <result column="ConvertibleBonds" property="convertiblebonds" jdbcType="VARCHAR" />
+    <result column="CorpFullName" property="corpfullname" jdbcType="VARCHAR" />
+    <result column="RegistryAddress" property="registryaddress" jdbcType="VARCHAR" />
+    <result column="CommunicationAddress" property="communicationaddress" jdbcType="VARCHAR" />
+    <result column="LegalRepr" property="legalrepr" jdbcType="VARCHAR" />
+    <result column="SecrOfBOD" property="secrofbod" jdbcType="VARCHAR" />
+    <result column="EmailAddress" property="emailaddress" jdbcType="VARCHAR" />
+    <result column="PhoneNO" property="phoneno" jdbcType="VARCHAR" />
+    <result column="CorpUrl" property="corpurl" jdbcType="VARCHAR" />
+    <result column="CsrcIndustry" property="csrcindustry" jdbcType="VARCHAR" />
+    <result column="SseIndustry" property="sseindustry" jdbcType="VARCHAR" />
+    <result column="Provice" property="provice" jdbcType="VARCHAR" />
+    <result column="Status" property="status" jdbcType="VARCHAR" />
+    <result column="Is180Sample" property="is180sample" jdbcType="VARCHAR" />
+    <result column="IsOversea" property="isoversea" jdbcType="VARCHAR" />
+    <result column="OverSeaLoc" property="oversealoc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    StockCode, StockCodeB, StockBelongIndexCode, TradeCenterCode, CorpName, ListDate, 
+    ConvertibleBonds, CorpFullName, RegistryAddress, CommunicationAddress, LegalRepr, 
+    SecrOfBOD, EmailAddress, PhoneNO, CorpUrl, CsrcIndustry, SseIndustry, Provice, Status, 
+    Is180Sample, IsOversea, OverSeaLoc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from stockinfo
+    where StockCode = #{stockcode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from stockinfo
+    where StockCode = #{stockcode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.emmaluo.model.StockInfo" >
+    insert into stockinfo (StockCode, StockCodeB, StockBelongIndexCode, 
+      TradeCenterCode, CorpName, ListDate, 
+      ConvertibleBonds, CorpFullName, RegistryAddress, 
+      CommunicationAddress, LegalRepr, SecrOfBOD, 
+      EmailAddress, PhoneNO, CorpUrl, 
+      CsrcIndustry, SseIndustry, Provice, 
+      Status, Is180Sample, IsOversea, 
+      OverSeaLoc)
+    values (#{stockcode,jdbcType=VARCHAR}, #{stockcodeb,jdbcType=VARCHAR}, #{stockbelongindexcode,jdbcType=VARCHAR}, 
+      #{tradecentercode,jdbcType=VARCHAR}, #{corpname,jdbcType=VARCHAR}, #{listdate,jdbcType=VARCHAR}, 
+      #{convertiblebonds,jdbcType=VARCHAR}, #{corpfullname,jdbcType=VARCHAR}, #{registryaddress,jdbcType=VARCHAR}, 
+      #{communicationaddress,jdbcType=VARCHAR}, #{legalrepr,jdbcType=VARCHAR}, #{secrofbod,jdbcType=VARCHAR}, 
+      #{emailaddress,jdbcType=VARCHAR}, #{phoneno,jdbcType=VARCHAR}, #{corpurl,jdbcType=VARCHAR}, 
+      #{csrcindustry,jdbcType=VARCHAR}, #{sseindustry,jdbcType=VARCHAR}, #{provice,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{is180sample,jdbcType=VARCHAR}, #{isoversea,jdbcType=VARCHAR}, 
+      #{oversealoc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.emmaluo.model.StockInfo" >
+    insert into stockinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stockcode != null" >
+        StockCode,
+      </if>
+      <if test="stockcodeb != null" >
+        StockCodeB,
+      </if>
+      <if test="stockbelongindexcode != null" >
+        StockBelongIndexCode,
+      </if>
+      <if test="tradecentercode != null" >
+        TradeCenterCode,
+      </if>
+      <if test="corpname != null" >
+        CorpName,
+      </if>
+      <if test="listdate != null" >
+        ListDate,
+      </if>
+      <if test="convertiblebonds != null" >
+        ConvertibleBonds,
+      </if>
+      <if test="corpfullname != null" >
+        CorpFullName,
+      </if>
+      <if test="registryaddress != null" >
+        RegistryAddress,
+      </if>
+      <if test="communicationaddress != null" >
+        CommunicationAddress,
+      </if>
+      <if test="legalrepr != null" >
+        LegalRepr,
+      </if>
+      <if test="secrofbod != null" >
+        SecrOfBOD,
+      </if>
+      <if test="emailaddress != null" >
+        EmailAddress,
+      </if>
+      <if test="phoneno != null" >
+        PhoneNO,
+      </if>
+      <if test="corpurl != null" >
+        CorpUrl,
+      </if>
+      <if test="csrcindustry != null" >
+        CsrcIndustry,
+      </if>
+      <if test="sseindustry != null" >
+        SseIndustry,
+      </if>
+      <if test="provice != null" >
+        Provice,
+      </if>
+      <if test="status != null" >
+        Status,
+      </if>
+      <if test="is180sample != null" >
+        Is180Sample,
+      </if>
+      <if test="isoversea != null" >
+        IsOversea,
+      </if>
+      <if test="oversealoc != null" >
+        OverSeaLoc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stockcode != null" >
+        #{stockcode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockcodeb != null" >
+        #{stockcodeb,jdbcType=VARCHAR},
+      </if>
+      <if test="stockbelongindexcode != null" >
+        #{stockbelongindexcode,jdbcType=VARCHAR},
+      </if>
+      <if test="tradecentercode != null" >
+        #{tradecentercode,jdbcType=VARCHAR},
+      </if>
+      <if test="corpname != null" >
+        #{corpname,jdbcType=VARCHAR},
+      </if>
+      <if test="listdate != null" >
+        #{listdate,jdbcType=VARCHAR},
+      </if>
+      <if test="convertiblebonds != null" >
+        #{convertiblebonds,jdbcType=VARCHAR},
+      </if>
+      <if test="corpfullname != null" >
+        #{corpfullname,jdbcType=VARCHAR},
+      </if>
+      <if test="registryaddress != null" >
+        #{registryaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="communicationaddress != null" >
+        #{communicationaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="legalrepr != null" >
+        #{legalrepr,jdbcType=VARCHAR},
+      </if>
+      <if test="secrofbod != null" >
+        #{secrofbod,jdbcType=VARCHAR},
+      </if>
+      <if test="emailaddress != null" >
+        #{emailaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneno != null" >
+        #{phoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="corpurl != null" >
+        #{corpurl,jdbcType=VARCHAR},
+      </if>
+      <if test="csrcindustry != null" >
+        #{csrcindustry,jdbcType=VARCHAR},
+      </if>
+      <if test="sseindustry != null" >
+        #{sseindustry,jdbcType=VARCHAR},
+      </if>
+      <if test="provice != null" >
+        #{provice,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="is180sample != null" >
+        #{is180sample,jdbcType=VARCHAR},
+      </if>
+      <if test="isoversea != null" >
+        #{isoversea,jdbcType=VARCHAR},
+      </if>
+      <if test="oversealoc != null" >
+        #{oversealoc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.emmaluo.model.StockInfo" >
+    update stockinfo
+    <set >
+      <if test="stockcodeb != null" >
+        StockCodeB = #{stockcodeb,jdbcType=VARCHAR},
+      </if>
+      <if test="stockbelongindexcode != null" >
+        StockBelongIndexCode = #{stockbelongindexcode,jdbcType=VARCHAR},
+      </if>
+      <if test="tradecentercode != null" >
+        TradeCenterCode = #{tradecentercode,jdbcType=VARCHAR},
+      </if>
+      <if test="corpname != null" >
+        CorpName = #{corpname,jdbcType=VARCHAR},
+      </if>
+      <if test="listdate != null" >
+        ListDate = #{listdate,jdbcType=VARCHAR},
+      </if>
+      <if test="convertiblebonds != null" >
+        ConvertibleBonds = #{convertiblebonds,jdbcType=VARCHAR},
+      </if>
+      <if test="corpfullname != null" >
+        CorpFullName = #{corpfullname,jdbcType=VARCHAR},
+      </if>
+      <if test="registryaddress != null" >
+        RegistryAddress = #{registryaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="communicationaddress != null" >
+        CommunicationAddress = #{communicationaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="legalrepr != null" >
+        LegalRepr = #{legalrepr,jdbcType=VARCHAR},
+      </if>
+      <if test="secrofbod != null" >
+        SecrOfBOD = #{secrofbod,jdbcType=VARCHAR},
+      </if>
+      <if test="emailaddress != null" >
+        EmailAddress = #{emailaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneno != null" >
+        PhoneNO = #{phoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="corpurl != null" >
+        CorpUrl = #{corpurl,jdbcType=VARCHAR},
+      </if>
+      <if test="csrcindustry != null" >
+        CsrcIndustry = #{csrcindustry,jdbcType=VARCHAR},
+      </if>
+      <if test="sseindustry != null" >
+        SseIndustry = #{sseindustry,jdbcType=VARCHAR},
+      </if>
+      <if test="provice != null" >
+        Provice = #{provice,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        Status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="is180sample != null" >
+        Is180Sample = #{is180sample,jdbcType=VARCHAR},
+      </if>
+      <if test="isoversea != null" >
+        IsOversea = #{isoversea,jdbcType=VARCHAR},
+      </if>
+      <if test="oversealoc != null" >
+        OverSeaLoc = #{oversealoc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where StockCode = #{stockcode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.emmaluo.model.StockInfo" >
+    update stockinfo
+    set StockCodeB = #{stockcodeb,jdbcType=VARCHAR},
+      StockBelongIndexCode = #{stockbelongindexcode,jdbcType=VARCHAR},
+      TradeCenterCode = #{tradecentercode,jdbcType=VARCHAR},
+      CorpName = #{corpname,jdbcType=VARCHAR},
+      ListDate = #{listdate,jdbcType=VARCHAR},
+      ConvertibleBonds = #{convertiblebonds,jdbcType=VARCHAR},
+      CorpFullName = #{corpfullname,jdbcType=VARCHAR},
+      RegistryAddress = #{registryaddress,jdbcType=VARCHAR},
+      CommunicationAddress = #{communicationaddress,jdbcType=VARCHAR},
+      LegalRepr = #{legalrepr,jdbcType=VARCHAR},
+      SecrOfBOD = #{secrofbod,jdbcType=VARCHAR},
+      EmailAddress = #{emailaddress,jdbcType=VARCHAR},
+      PhoneNO = #{phoneno,jdbcType=VARCHAR},
+      CorpUrl = #{corpurl,jdbcType=VARCHAR},
+      CsrcIndustry = #{csrcindustry,jdbcType=VARCHAR},
+      SseIndustry = #{sseindustry,jdbcType=VARCHAR},
+      Provice = #{provice,jdbcType=VARCHAR},
+      Status = #{status,jdbcType=VARCHAR},
+      Is180Sample = #{is180sample,jdbcType=VARCHAR},
+      IsOversea = #{isoversea,jdbcType=VARCHAR},
+      OverSeaLoc = #{oversealoc,jdbcType=VARCHAR}
+    where StockCode = #{stockcode,jdbcType=VARCHAR}
+  </update>
+</mapper>
