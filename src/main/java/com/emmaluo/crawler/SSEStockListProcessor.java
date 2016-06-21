@@ -8,6 +8,7 @@ import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 
+import us.codecraft.webmagic.pipeline.FilePipeline;
 import us.codecraft.webmagic.pipeline.Pipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Selectable;
@@ -38,7 +39,11 @@ public class SSEStockListProcessor implements PageProcessor {
     private Site site = Site
             .me()
             .setDomain("biz.sse.com.cn")
-            .setSleepTime(3000)
+            .setSleepTime(2000)
+            .setTimeOut(3000)
+            .setRetryTimes(8)
+            .setRetrySleepTime(2000)
+            .setCycleRetryTimes(5) //只有该方法的重试生效
             .setCharset("GB2312")
             .setUserAgent(
                     "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36");
@@ -46,38 +51,6 @@ public class SSEStockListProcessor implements PageProcessor {
 
     @Override
     public void process(Page page) {
-
-        //解析http://biz.sse.com.cn/sseportal/webapp/datapresent/SSEQueryFirstSSEDtlcAct?indexCode=000004&SSECODE=1
-        /*List<String> industryUrls = page.getHtml().xpath("html/body/table[3]/tbody/tr/td[4]/table/tbody/tr/td/table[3]/tbody/tr[2]/td[2]/table[2]/tbody/tr/td/a/@href").regex(IND_URL_LIST).all();
-        page.addTargetRequests(industryUrls);
-        //股票概要信息
-        if (page.getUrl().regex(IND_URL_LIST).match()) {
-            List<String> indexCodes = page.getHtml().xpath("html/body/table[3]/tbody/tr/td[4]/table/tbody/tr/td/table[3]/tbody/tr[2]/td[2]/table[2]/tbody/tr/td/a/@href").regex("/sseportal/webapp/datapresent/SSEQueryFirstSSEDtlcAct\\?indexCode\\=(\\d+)&SSECODE=\\d+").all();
-            List<String> sseCodes = page.getHtml().xpath("html/body/table[3]/tbody/tr/td[4]/table/tbody/tr/td/table[3]/tbody/tr[2]/td[2]/table[2]/tbody/tr/td/a/@href").regex("/sseportal/webapp/datapresent/SSEQueryFirstSSEDtlcAct\\?indexCode\\=\\d+&SSECODE=(\\d+)").all();
-            List<Selectable> rows = page.getHtml().xpath("html/body/table[3]/tbody/tr/td[4]/table/tbody/tr/td/table[3]/tbody/tr[2]/td[2]/table[2]/tbody/tr").nodes();
-            List<StockInfo> stockInfos = new ArrayList<StockInfo>();
-            List<String> stockdetailUrls = page.getHtml().xpath("html/body/table[3]/tbody/tr/td[4]/table/tbody/tr/td/table[3]/tbody/tr[2]/td[2]/table[2]/tbody/tr/td[1]/a/@href").regex(STOCK_DETAIL_URL_LIST).all();
-            page.addTargetRequests(stockdetailUrls);
-            rows.remove(0);
-            for (Selectable row : rows) {
-                StockInfo stockInfo = new StockInfo();
-                stockInfo.setStockCode(row.xpath("//td[1]/a/text()").get());
-                stockInfo.setCorpName(row.xpath("//td[2]/text()").get());
-                stockInfo.setStockBelongIndexCode("A");
-                stockInfo.setTradeCenterCode("SH");
-                //stockInfo.setStockCode(row.xpath("//td[3]/text()").get());
-                stockInfo.setStockCodeB(row.xpath("//td[4]/text()").get());
-                stockInfos.add(stockInfo);
-            }
-            if (stockInfos != null && stockInfos.size() != 0) {
-                count += stockInfos.size();
-                System.out.println(count);
-                page.putField("stockcounts", count);
-                page.putField("stockinfos", stockInfos);
-
-            }
-        }*/
-
         //股票概要信息处理
         if(page.getUrl().regex(STOCK_DETAIL_URL_LIST).match()){
             //获取第一部分
@@ -199,7 +172,7 @@ public class SSEStockListProcessor implements PageProcessor {
                     default:
                 }
             }
-            if(stockInfo != null && stockInfo.isSet()){
+            if(stockInfo != null && stockInfo.getStockcode() != null && stockInfo.isSet()){
                 page.putField("stockInfo",stockInfo);
 
             }
@@ -219,6 +192,7 @@ public class SSEStockListProcessor implements PageProcessor {
                     page.addTargetRequest(href.xpath("//a//@href").get());
                 }
             }
+
         }
 
 
@@ -236,7 +210,7 @@ public class SSEStockListProcessor implements PageProcessor {
     public void crawl() {
         /*Spider.create(new SSEStockListProcessor()).addUrl("http://biz.sse.com.cn/sseportal/webapp/datapresent/SSEQueryFirstSSENewAct").addPipeline(new FilePipeline("F:/result/"))
                 .run();*/
-        Spider.create(new SSEStockListProcessor()).addUrl("http://biz.sse.com.cn/sseportal/webapp/datapresent/SSEQueryStockInfoAct?reportName=BizCompStockInfoRpt&PRODUCTID=&PRODUCTJP=&PRODUCTNAME=&keyword=&tab_flg=1&CURSOR=1").addPipeline(stockInfoDaoPipeline)
+        Spider.create(new SSEStockListProcessor()).addUrl("http://biz.sse.com.cn/sseportal/webapp/datapresent/SSEQueryStockInfoAct?reportName=BizCompStockInfoRpt&PRODUCTID=&PRODUCTJP=&PRODUCTNAME=&keyword=&tab_flg=1&CURSOR=1").addPipeline(stockInfoDaoPipeline).addPipeline(new FilePipeline("F:/result/")).thread(10)
                 .run();
 
 

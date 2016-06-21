@@ -24,6 +24,7 @@ public class StockInfoDaoPipeline implements Pipeline{
 
     @Override
     public void process(ResultItems resultItems, Task task) {
-        stockInfoMapper.insert((StockInfo) resultItems.get("stockInfo"));
+        if(resultItems.get("stockInfo") != null)
+            stockInfoMapper.insert((StockInfo) resultItems.get("stockInfo"));
     }
 }
