@@ -1,4 +1,4 @@
-package com.emmaluo.com.emmaluo.pipline;
+package com.emmaluo.pipline;
 
 import com.emmaluo.IDao.StockInfoMapper;
 import com.emmaluo.model.StockInfo;
