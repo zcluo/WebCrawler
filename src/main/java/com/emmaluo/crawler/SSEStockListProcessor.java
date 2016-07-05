@@ -1,7 +1,6 @@
 package com.emmaluo.crawler;
 
 import com.emmaluo.model.StockInfo;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Page;
 
